@@ -1,5 +1,7 @@
 # Knō Demo
 
+**Live demo:** https://kno-demoo.vercel.app
+
 A demo learning marketplace where signed-in users post and manage learning sessions in real time.
 
 **Stack:** Next.js (App Router), React, TypeScript, Tailwind CSS, Convex, Clerk, Sonner.
