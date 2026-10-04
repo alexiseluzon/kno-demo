@@ -7,12 +7,17 @@ const RATE_LIMIT = { max: 5, windowMs: 60_000 };
 export const list = query({
   args: { category: v.optional(v.string()) },
   handler: async (ctx, { category }) => {
+    const identity = await ctx.auth.getUserIdentity();
     const base = category
       ? ctx.db
           .query("sessions")
           .withIndex("by_category", (q) => q.eq("category", category))
       : ctx.db.query("sessions");
-    return await base.order("desc").take(50);
+    const docs = await base.order("desc").take(50);
+    return docs.map(({ hostId, ...d }) => ({
+      ...d,
+      isOwner: identity?.tokenIdentifier === hostId,
+    }));
   },
 });
 
