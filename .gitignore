@@ -23,7 +23,7 @@ test-results/
 blob-report/
 
 # convex
-convex/_generated/
+# convex/_generated/
 
 # logs
 npm-debug.log*

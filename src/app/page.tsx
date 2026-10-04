@@ -2,10 +2,20 @@ import { Show } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import SessionForm from "@/components/SessionForm";
 import SessionList from "@/components/SessionList";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+}).replace(/</g, "\\u003c");
 
 export default function Home() {
   return (
     <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <Header />
       <main id="main" className="mx-auto max-w-4xl space-y-8 px-4 py-8">
         <div>

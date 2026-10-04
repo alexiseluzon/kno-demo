@@ -1,10 +1,22 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "../components/Providers";
+import type { Metadata } from "next";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Knō Demo | Learning Sessions",
-  description: "A demo learning marketplace built with Next.js, Convex, and Clerk.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: `${SITE_NAME} | Learning Sessions`, template: `%s | ${SITE_NAME}` },
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} | Learning Sessions`,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: { card: "summary", title: SITE_NAME, description: SITE_DESCRIPTION },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

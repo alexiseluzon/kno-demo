@@ -10,7 +10,8 @@
     "prepare": "husky",
     "test": "jest",
     "test:int": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.10",
