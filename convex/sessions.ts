@@ -46,7 +46,9 @@ export const create = mutation({
     return await ctx.db.insert("sessions", {
       ...result.value,
       hostId: identity.tokenIdentifier,
-      hostName: (identity.name ?? identity.email ?? "Anonymous").slice(0, 60),
+      hostName: (
+        identity.name ?? identity.givenName ?? identity.nickname ?? identity.email ?? "Anonymous"
+      ).slice(0, 60),
     });
   },
 });

@@ -18,6 +18,16 @@ export default function SessionForm() {
 
   const check = validateSessionInput({ title, description, category });
   const disabled = !check.ok || busy;
+  const titleLen = title.trim().length;
+  const descLen = description.trim().length;
+  const titleErr =
+    title && titleLen < LIMITS.title.min
+      ? `Title must be at least ${LIMITS.title.min} characters.`
+      : "";
+  const descErr =
+    description && descLen < LIMITS.description.min
+      ? `Description must be at least ${LIMITS.description.min} characters.`
+      : "";
 
   async function submit() {
     setBusy(true);
@@ -47,14 +57,38 @@ export default function SessionForm() {
         <h2 className="text-lg font-semibold">Post a session</h2>
         <div>
           <label htmlFor="title" className="mb-1 block text-sm font-medium">Title</label>
-          <input id="title" className={input} value={title} maxLength={LIMITS.title.max}
-            onChange={(e) => setTitle(e.target.value)} required />
+          <input
+            id="title"
+            className={`${input} ${titleErr ? "border-red-500" : ""}`}
+            value={title}
+            maxLength={LIMITS.title.max}
+            onChange={(e) => setTitle(e.target.value)}
+            aria-invalid={!!titleErr}
+            aria-describedby="title-hint"
+            required
+          />
+          <p id="title-hint" role={titleErr ? "alert" : undefined}
+            className={`mt-1 text-xs ${titleErr ? "text-red-600" : "text-slate-500"}`}>
+            {titleErr || `${titleLen}/${LIMITS.title.max} (min ${LIMITS.title.min})`}
+          </p>
         </div>
         <div>
           <label htmlFor="desc" className="mb-1 block text-sm font-medium">Description</label>
-          <textarea id="desc" rows={3} className={input} value={description}
+          <textarea
+            id="desc"
+            rows={3}
+            className={`${input} ${descErr ? "border-red-500" : ""}`}
+            value={description}
             maxLength={LIMITS.description.max}
-            onChange={(e) => setDescription(e.target.value)} required />
+            onChange={(e) => setDescription(e.target.value)}
+            aria-invalid={!!descErr}
+            aria-describedby="desc-hint"
+            required
+          />
+          <p id="desc-hint" role={descErr ? "alert" : undefined}
+            className={`mt-1 text-xs ${descErr ? "text-red-600" : "text-slate-500"}`}>
+            {descErr || `${descLen}/${LIMITS.description.max} (min ${LIMITS.description.min})`}
+          </p>
         </div>
         <div>
           <label htmlFor="cat" className="mb-1 block text-sm font-medium">Category</label>
